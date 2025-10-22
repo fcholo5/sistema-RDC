@@ -1,0 +1,128 @@
+<!-- Botón para abrir/cerrar menú lateral -->
+<button id="sidebarToggle"
+        class="fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-lg shadow-lg xl:hidden"
+        (click)="toggleSidebar()">
+  ☰
+</button>
+
+<!-- Sidebar -->
+<aside id="sidebar"
+       class="bg-gradient-to-br from-gray-800 to-gray-900 fixed inset-y-0 left-0 z-40 w-72 transform transition-transform duration-300 xl:translate-x-0"
+       [class.-translate-x-full]="!isOpen">
+
+  <div class="border-b border-white/10 px-6 py-4 flex justify-between items-center">
+    <a routerLink="/dashboard">
+      <h2 class="text-2xl font-bold text-white drop-shadow-md">FERRETYCOM</h2>
+    </a>
+    <button class="text-white xl:hidden" (click)="toggleSidebar()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <nav class="mt-4 px-4">
+    <ul class="flex flex-col gap-1">
+
+      <!-- Dashboard -->
+      <li>
+        <a routerLink="/dashboard"
+          routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-lg"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center gap-4 px-4 py-3 text-white rounded-lg hover:bg-white/10 transition-all font-medium">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      
+
+      <!-- Ventas con submenú -->
+      <!-- <li>
+        <button type="button"
+                class="flex items-center justify-between w-full px-4 py-3 text-white rounded-lg hover:bg-white/10 transition-all font-medium"
+                (click)="toggleVentas()">
+          <span class="flex items-center gap-4">
+            <i class="bi bi-menu-button-wide"></i> Ventas
+          </span>
+          <i class="bi bi-chevron-down transition-transform" [class.rotate-180]="ventasAbierto"></i>
+        </button>
+        <ul *ngIf="ventasAbierto" class="ml-6 mt-1 space-y-1">
+          <li>
+            <a routerLink="/dashboard/ventas"
+               routerLinkActive="text-blue-300"
+               class="flex items-center gap-2 text-sm text-white hover:text-blue-400 transition-all">
+              <i class="bi bi-circle-fill text-xs"></i> Vender producto
+            </a>
+          </li>
+          <li>
+            <a routerLink="/dashboard/detalle-ventas"
+               routerLinkActive="text-blue-300"
+               class="flex items-center gap-2 text-sm text-white hover:text-blue-400 transition-all">
+              <i class="bi bi-circle-fill text-xs"></i> Detalle de Ventas
+            </a>
+          </li>
+        </ul>
+      </li> -->
+
+      <li>
+        <button
+          type="button"
+          class="flex items-center justify-between w-full px-4 py-3 text-white rounded-lg hover:bg-white/10 transition-all font-medium"
+          (click)="toggleVentas()"
+        >
+          <span class="flex items-center gap-3">
+            <i class="bi bi-menu-button-wide"></i>
+            Ventas
+          </span>
+          <i
+            class="bi bi-chevron-down text-white transition-transform duration-300"
+            [class.rotate-180]="ventasAbierto"
+          ></i>
+        </button>
+
+        <ul
+          *ngIf="ventasAbierto"
+          class="ml-6 mt-2 space-y-1 transition-all duration-300 ease-in-out"
+        >
+          <li>
+            <a
+              routerLink="/dashboard/ventas"
+              routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-lg"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="block px-3 py-2 text-sm text-white rounded-md hover:bg-blue-500/20 transition-all"
+            >
+              <i class="bi bi-box-arrow-in-right mr-2 text-xs"></i>
+              Vender producto
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/dashboard/detalle-ventas"
+              routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-lg"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="block px-3 py-2 text-sm text-white rounded-md hover:bg-blue-500/20 transition-all"
+            >
+              <i class="bi bi-file-earmark-text mr-2 text-xs"></i>
+              Detalle de Ventas
+            </a>
+          </li>
+        </ul>
+      </li>
+
+
+      <!-- Resto del menú usando *ngFor -->
+      <li *ngFor="let item of sidebarItems">
+        <a [routerLink]="item.link"
+          routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-lg"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center gap-4 px-4 py-3 text-white rounded-lg hover:bg-white/10 transition-all font-medium">
+          <i [class]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+</aside>

@@ -1,0 +1,79 @@
+/* Aquí irían los estilos específicos de tu dashboard */
+
+/* Estilos para las tarjetas de información */
+.info-card {
+  padding-bottom: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+}
+
+.info-card .card-title {
+  padding: 20px 0 15px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #012970;
+  font-family: "Poppins", sans-serif;
+}
+
+.info-card .card-title span {
+  color: #899bbd;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.info-card .card-icon {
+  font-size: 32px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 15px;
+  transition: all 0.3s ease-out;
+}
+
+/* Colores de fondo para los iconos de las tarjetas (ejemplos) */
+.info-card.sales-card .card-icon { /* Compras, Ventas */
+  background: #f6f9ff;
+  color: #4154f1;
+}
+
+.info-card.revenue-card .card-icon { /* Productos, Orden Compra */
+  background: #f0fdf4;
+  color: #2eca6a;
+}
+
+.info-card.customers-card .card-icon { /* Clientes */
+  background: #ffeff4;
+  color: #ff771d;
+}
+
+/* Asegúrate de definir los colores bg-purple, bg-info, bg-success, bg-danger, bg-warning */
+/* Si no están en Bootstrap, tendrás que definirlos: */
+.bg-purple { background-color: #6f42c1 !important; } /* O tu color púrpura */
+.bg-info { background-color: #0dcaf0 !important; }
+.bg-success { background-color: #198754 !important; }
+.bg-danger { background-color: #dc3545 !important; }
+.bg-warning { background-color: #ffc107 !important; }
+
+
+/* Estilos para las tablas (Productos con Existencia Mínima, Órdenes de Compra) */
+.recent-sales, .top-selling {
+  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+  border-radius: 8px;
+}
+
+.recent-sales .table th, .top-selling .table th {
+  font-weight: 600;
+  color: #012970;
+  background-color: #f6f9ff;
+}
+
+.recent-sales .table td, .top-selling .table td {
+  font-size: 14px;
+  color: #444444;
+}
+
+/* ... y otros estilos que tu plantilla proporcione para estas secciones ... */

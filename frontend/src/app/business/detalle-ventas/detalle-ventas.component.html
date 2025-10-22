@@ -1,0 +1,64 @@
+<main class="p-6 max-w-6xl mx-auto">
+  <!-- Título principal -->
+  <div class="mb-6 text-center">
+    <h1 class="text-3xl font-bold text-gray-800">Gestión de Detalles de Venta</h1>
+    <p class="text-gray-500">Aquí puedes consultar y modificar los productos vendidos.</p>
+  </div>
+
+  <!-- Tabla de detalles -->
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm text-center">
+        <thead class="bg-gray-800 text-white">
+          <tr>
+            <th class="px-4 py-3">ID</th>
+            <th class="px-4 py-3">Venta</th>
+            <th class="px-4 py-3">Producto</th>
+            <th class="px-4 py-3">Cantidad</th>
+            <th class="px-4 py-3">Precio Unitario</th>
+            <th class="px-4 py-3">Subtotal</th>
+            <th class="px-4 py-3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detalle of detalles" class="border-t hover:bg-gray-50">
+            <td class="px-4 py-2 font-medium">{{ detalle.id }}</td>
+            <td class="px-4 py-2">{{ detalle.venta?.id || detalle.venta_id }}</td>
+            <td class="px-4 py-2">{{ detalle.producto?.nombre || detalle.producto_id }}</td>
+            <td class="px-4 py-2">
+              <input type="number"
+                     [(ngModel)]="detalle.cantidad"
+                     [ngModelOptions]="{standalone: true}"
+                     min="0.01" step="0.01"
+                     class="w-20 px-2 py-1 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </td>
+            <td class="px-4 py-2">
+              <input type="number"
+                     [(ngModel)]="detalle.precio_unitario"
+                     [ngModelOptions]="{standalone: true}"
+                     min="0" step="0.01"
+                     class="w-24 px-2 py-1 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </td>
+            <td class="px-4 py-2 font-semibold text-green-700">
+              {{ detalle.cantidad * detalle.precio_unitario | number:'1.2-2' }}
+            </td>
+            <td class="px-4 py-2 space-x-2">
+              <button (click)="actualizarDetalle(detalle)"
+                      class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow-sm transition">
+                <i class="fa fa-save mr-1"></i>Guardar
+              </button>
+              <button (click)="eliminarDetalle(detalle.id!)"
+                      class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded shadow-sm transition">
+                <i class="fa fa-trash mr-1"></i>Eliminar
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="detalles.length === 0">
+            <td colspan="7" class="text-gray-500 py-4">No hay detalles de venta registrados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,119 @@
+
+<main class="p-6 max-w-7xl mx-auto">
+  <!-- Título -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-1">Usuarios</h1>
+    <p class="text-gray-500">Administra las cuentas y roles de los usuarios del sistema.</p>
+  </div>
+  <!-- Botón para abrir el modal de creación/edición de usuario -->
+   <!-- Botón Agregar Usuario -->
+  <div class="mb-4 text-end">
+  <div (click)="abrirModalUsuario()"
+       class="inline-flex items-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow transition">
+      <i class="fa-solid fa-user-plus mr-2"></i>Agregar nuevo usuario
+    </div>
+  </div>
+
+  <!-- Tarjeta de Tabla -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm text-center">
+        <thead class="bg-gray-800 text-white uppercase">
+          <tr>
+            <th class="px-4 py-3">Email</th>
+            <th class="px-4 py-3">Nombre</th>
+            <th class="px-4 py-3">Rol</th>
+            <th class="px-4 py-3">Contraseña</th>
+            <th class="px-4 py-3">Estado</th>
+            <th class="px-4 py-3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="6" class="px-4 py-4 text-gray-500">Cargando usuarios...</td>
+          </tr>
+
+          <ng-container *ngIf="!loading && users.length > 0">
+            <tr *ngFor="let user of users" class="border-b hover:bg-gray-50">
+              <td class="px-4 py-3">{{ user.email }}</td>
+              <td class="px-4 py-3">{{ user.name }}</td>
+              <td class="px-4 py-3 capitalize">{{ user.rol_id === 1 ? 'Administrador' : 'Vendedor' }}</td>
+              <td class="px-4 py-3">
+                <button (click)="openChangePasswordModal(user.id)"
+                        class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm">
+                  <i class="fa-solid fa-key mr-1"></i>Cambiar
+                </button>
+              </td>
+              <td class="px-4 py-3">
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox"
+                         class="sr-only peer"
+                         [checked]="user.status === 1"
+                         (change)="cambiarEstado(user.id, $event.target ? 1 : 0)">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-400 rounded-full peer peer-checked:bg-green-500 relative">
+                    <span class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition peer-checked:translate-x-5"></span>
+                  </div>
+                </label>
+              </td>
+              <td class="px-4 py-3 flex justify-center gap-2">
+                <button (click)="abrirModalUsuario(user)"
+                      class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm" title="Editar">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+
+                <button (click)="deleteUser(user.id)"
+                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm" title="Eliminar">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+
+          <tr *ngIf="!loading && users.length === 0">
+            <td colspan="6" class="px-4 py-4 text-gray-500 text-center">No hay usuarios registrados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<!-- Modal Crear/Editar Usuario -->
+<div *ngIf="usuarioModalVisible" class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 relative">
+    <button class="absolute top-3 right-3 text-gray-500 hover:text-black" (click)="cerrarModalUsuario()">✕</button>
+
+    <h2 class="text-xl font-bold mb-4">{{ esEdicion ? 'Editar Usuario' : 'Crear Nuevo Usuario' }}</h2>
+
+    <form (ngSubmit)="guardarUsuario()" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Nombre</label>
+        <input [(ngModel)]="usuarioEnEdicion.name" name="name" required class="w-full border rounded px-3 py-2">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input [(ngModel)]="usuarioEnEdicion.email" name="email" type="email" required class="w-full border rounded px-3 py-2">
+      </div>
+
+      <div *ngIf="!esEdicion">
+        <label class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input [(ngModel)]="usuarioEnEdicion.password" name="password" type="password" required class="w-full border rounded px-3 py-2">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Rol</label>
+        <select [(ngModel)]="usuarioEnEdicion.rol_id" name="rol_id" class="w-full border rounded px-3 py-2">
+          <option [value]="1">Administrador</option>
+          <option [value]="2">Vendedor</option>
+        </select>
+      </div>
+
+
+      <div class="text-end">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+          {{ esEdicion ? 'Actualizar' : 'Crear' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
